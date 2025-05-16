@@ -1,0 +1,71 @@
+nodes:
+  - task:
+      ui:
+        default_width: 450
+      inputs_def:
+        []
+      outputs_def:
+        - handle: explanation
+          json_schema:
+            type: string
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+scriptlet#1.ts
+    title: "Fetch"
+    icon: ":skill-icons:typescript:"
+    node_id: +typescript#1
+    inputs_from:
+      []
+  - task: llm::LLM
+    title: To Chinese
+    node_id: LLM#1
+    inputs_from:
+      - handle: input
+        from_node:
+          - node_id: +typescript#1
+            output_handle: explanation
+      - handle: model
+        value:
+          model: gemini2.5-flash
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+      - handle: messages
+        value:
+          - role: user
+            content: >-
+              Please translate the following content into Chinese. Please do not
+              add any extra information.
+
+
+              {{input}}
+        schema_overrides:
+          - schema:
+              type: array
+  - node_id: LLM#2
+    node_type: task_node
+    title: "To Japanese"
+    inputs_from:
+      - handle: input
+        from_node:
+          - node_id: +typescript#1
+            output_handle: explanation
+      - handle: model
+        value:
+          model: x-ai/grok-3-mini-beta
+          temperature: 0
+          top_p: 0.5
+          max_tokens: 4096
+      - handle: messages
+        value:
+          - role: user
+            content: |-
+              Please translate the following content into Japanese. Please do not add any extra information.
+
+              {{input}}
+        schema_overrides:
+          - schema:
+              type: array
+    task: llm::LLM
+title: 1. Simple

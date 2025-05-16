@@ -1,0 +1,22 @@
+{
+  "nodes": {
+    "+typescript#1": {
+      "contentWidth": 510.96484375,
+      "rfNode": {
+        "position": {
+          "x": 0,
+          "y": 126.5
+        }
+      }
+    },
+    "markdown_text_preview#1": {
+      "contentWidth": 450,
+      "rfNode": {
+        "position": {
+          "x": 658.664660361135,
+          "y": 351.17110920034395
+        }
+      }
+    }
+  }
+}

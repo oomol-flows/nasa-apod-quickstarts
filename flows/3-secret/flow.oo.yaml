@@ -1,0 +1,32 @@
+nodes:
+  - task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: input
+          json_schema:
+            contentMediaType: oomol/secret
+            type: string
+      outputs_def:
+        - handle: explanation
+          json_schema:
+            type: string
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+scriptlet#1.ts
+    title: "Fetch"
+    icon: ":skill-icons:typescript:"
+    node_id: +typescript#1
+    inputs_from:
+      - handle: input
+        value: ${{OO_SECRET:Custom,NASA,API_KEY}}
+  - task: oomol-preview::markdown_text_preview
+    title: "Markdown preview #1"
+    node_id: markdown_text_preview#1
+    inputs_from:
+      - handle: text
+        from_node:
+          - node_id: +typescript#1
+            output_handle: explanation
+title: 3. Secret

@@ -1,0 +1,17 @@
+version: 0.0.2
+scripts:
+  # Script executed when the container is first loaded
+  # eg: bootstrap: poetry add pandas
+  bootstrap: |
+    npm install
+    poetry install --no-root
+dependencies:
+  llm: 0.2.6
+  oomol-file: 0.0.10
+  oomol-preview: 0.0.3
+icon: ":twemoji:globe-showing-asia-australia:currentColor:"
+name: nasa-apod-quickstarts
+description: Examples in quickstarts
+displayName: NASA APOD
+releaseType: project
+repository: https://github.com/oomol-flows/nasa-apod-quickstarts

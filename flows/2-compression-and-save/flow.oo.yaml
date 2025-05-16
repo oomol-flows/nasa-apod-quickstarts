@@ -1,0 +1,69 @@
+nodes:
+  - task:
+      ui:
+        default_width: 450
+      inputs_def:
+        []
+      outputs_def:
+        - handle: explanation
+          json_schema:
+            type: string
+        - handle: url
+          json_schema:
+            type: string
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+scriptlet#1.ts
+    title: "Fetch"
+    icon: ":skill-icons:typescript:"
+    node_id: +typescript#1
+    inputs_from:
+      []
+  - task: oomol-file::url_to_file
+    title: "URL to file  #2"
+    node_id: url_to_file#2
+    inputs_from:
+      - handle: url
+        from_node:
+          - node_id: +typescript#1
+            output_handle: url
+      - handle: query
+        value:
+          {}
+      - handle: headers
+        value:
+          {}
+      - handle: timeout
+        value: 0
+      - handle: retry_times
+        value: 1
+  - task:
+      ui:
+        default_width: 450
+      inputs_def:
+        - handle: input
+          description: Input
+          json_schema:
+            type: string
+        - handle: out
+          json_schema:
+            type: string
+            ui:widget: dir
+      outputs_def:
+        []
+      executor:
+        name: nodejs
+        options:
+          entry: scriptlets/+scriptlet#2.ts
+    title: Save
+    icon: ":skill-icons:typescript:"
+    node_id: +typescript#3
+    inputs_from:
+      - handle: input
+        from_node:
+          - node_id: url_to_file#2
+            output_handle: file_path
+      - handle: out
+        value: /oomol-driver/oomol-storage/apod
+title: 2. Compression And Save
