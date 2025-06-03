@@ -1,6 +1,5 @@
-import type { Context } from "@oomol/types/oocana";
-
 //#region generated meta
+import type { Context } from "@oomol/types/oocana";
 type Inputs = {
 };
 type Outputs = {
@@ -19,5 +18,8 @@ export default async function(
         throw new Error(JSON.stringify(data));
     }
     context.preview({ type: "image", data: data.thumbnail_url || data.url });
-    return data;
+    return {
+        explanation: data.explanation,
+        url: data.url,
+    };
 };

@@ -1,9 +1,9 @@
-import type { Context } from "@oomol/types/oocana";
 import { cp } from "node:fs/promises";
 import path from "node:path";
 import sharp from 'sharp'
 
 //#region generated meta
+import type { Context } from "@oomol/types/oocana";
 type Inputs = {
     input: string;
     out: string;
