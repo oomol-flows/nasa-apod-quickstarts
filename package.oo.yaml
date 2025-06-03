@@ -1,4 +1,4 @@
-version: 0.0.2
+version: 0.0.3
 scripts:
   # Script executed when the container is first loaded
   # eg: bootstrap: poetry add pandas
@@ -15,3 +15,4 @@ description: Examples in quickstarts
 displayName: NASA APOD
 releaseType: project
 repository: https://github.com/oomol-flows/nasa-apod-quickstarts
+is_template: true
