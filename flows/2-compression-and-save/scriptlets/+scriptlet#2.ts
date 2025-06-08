@@ -3,7 +3,6 @@ import path from "node:path";
 import sharp from 'sharp'
 
 //#region generated meta
-import type { Context } from "@oomol/types/oocana";
 type Inputs = {
     input: string;
     out: string;
@@ -11,6 +10,7 @@ type Inputs = {
 type Outputs = {
 };
 //#endregion
+import type { Context } from "@oomol/types/oocana";
 
 export default async function(
     params: Inputs,
