@@ -1,11 +1,11 @@
 //#region generated meta
-import type { Context } from "@oomol/types/oocana";
 type Inputs = {
 };
 type Outputs = {
     explanation: string;
 };
 //#endregion
+import type { Context } from "@oomol/types/oocana";
 
 export default async function(
     params: Inputs,
