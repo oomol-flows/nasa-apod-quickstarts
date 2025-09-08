@@ -17,55 +17,110 @@ nodes:
     node_id: +typescript#1
     inputs_from:
       []
-  - task: llm::LLM
-    title: To Chinese
-    node_id: LLM#1
+  - node_id: llm-chat#5
+    title: "Chinese"
     inputs_from:
+      - handle: messages
+        value: null
+      - handle: timeout
+        value: 30
+      - handle: retry_times
+        value: 0
+      - handle: model
+        value:
+          model: kimi-k2-turbo-preview
+          temperature: 0.5
+          top_p: 1
+          max_tokens: 131072
+      - handle: template
+        value:
+          - role: user
+            content: "Please translate the following content into Chinese. Please do not add
+              any extra information.
+
+
+              {{input}}"
+        schema_overrides:
+          - schema:
+              type: array
+      - handle: retry_sleep
+        value: 3.5
+      - handle: skills
+        value:
+          []
+      - handle: stream
+        value: true
       - handle: input
+        value: hello!
         from_node:
           - node_id: +typescript#1
             output_handle: explanation
+    task: llm::llm-chat
+    inputs_def:
+      - handle: input
+        json_schema:
+          type: string
+          ui:widget: text
+        value: hello!
+  - node_id: llm-chat#6
+    title: "Japanese"
+    inputs_from:
+      - handle: messages
+        value: null
+      - handle: timeout
+        value: 30
+      - handle: retry_times
+        value: 0
       - handle: model
         value:
-          model: gemini2.5-flash
-          temperature: 0
-          top_p: 0.5
-          max_tokens: 4096
-      - handle: messages
+          model: openai/gpt-4.1
+          temperature: 0.5
+          top_p: 1
+          max_tokens: 1000000
+      - handle: template
         value:
           - role: user
-            content: >-
-              Please translate the following content into Chinese. Please do not
+            content: "Please translate the following content into Japanese. Please do not
               add any extra information.
 
 
-              {{input}}
+              {{input}}"
         schema_overrides:
           - schema:
               type: array
-  - node_id: LLM#2
-    node_type: task_node
-    title: "To Japanese"
-    inputs_from:
+      - handle: retry_sleep
+        value: 3.5
+      - handle: skills
+        value:
+          []
+      - handle: stream
+        value: true
       - handle: input
+        value: hello!
         from_node:
           - node_id: +typescript#1
             output_handle: explanation
-      - handle: model
-        value:
-          model: x-ai/grok-3-mini-beta
-          temperature: 0
-          top_p: 0.5
-          max_tokens: 4096
-      - handle: messages
-        value:
-          - role: user
-            content: |-
-              Please translate the following content into Japanese. Please do not add any extra information.
-
-              {{input}}
-        schema_overrides:
-          - schema:
-              type: array
-    task: llm::LLM
+    task: llm::llm-chat
+    inputs_def:
+      - handle: input
+        json_schema:
+          type: string
+          ui:widget: text
+        value: hello!
+  - node_id: markdown_text_preview#3
+    title: "Markdown preview #3"
+    inputs_from:
+      - handle: text
+        from_node:
+          - node_id: llm-chat#5
+            output_handle: output
+    task: oomol-preview::markdown_text_preview
+  - node_id: markdown_text_preview#1
+    title: "Markdown preview #1"
+    inputs_from:
+      - handle: text
+        from_node:
+          - node_id: llm-chat#6
+            output_handle: output
+    task: oomol-preview::markdown_text_preview
 title: 1. Simple
